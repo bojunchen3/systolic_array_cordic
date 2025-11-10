@@ -84,7 +84,7 @@ module tb;
         s_tvalid <= 1'b0;
         s_tlast  <= 1'b0;
 
-        repeat (30) @(posedge aclk);
+        repeat (50) @(posedge aclk);
 
         // run again
         @(posedge aclk);

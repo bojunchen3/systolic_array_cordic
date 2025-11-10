@@ -2,7 +2,7 @@ module process #(
     parameter integer DATA_WIDTH = 16,
     parameter integer OUT_WIDTH  = 16,
     parameter integer LANES      = 4,
-    parameter integer PIPE_LAT   = 6
+    parameter integer PIPE_LAT   = 40
 )(
     input  wire                          aclk,
     input  wire                          aresetn,
@@ -160,7 +160,18 @@ module process #(
         .result2     (result2)
     );
 
-    assign m_tdata  = {result2, result1, result0};
+    wire [31: 0] Output_xn;
+    CORDIC_Vector uut (
+        .clk        (aclk),
+        .RST_N      (arestn),
+        .Input_x0   (result0 << 16),
+        .Input_y0   (result1 << 16),
+        .Input_z0   (result2 << 16),
+        .Output_xn  (Output_xn)
+    );
+
+    //assign m_tdata  = {result2, result1, result0};
+    assign m_tdata = Output_xn >> 16;
     assign m_tvalid = vld_sr[PIPE_LAT-1];
     assign m_tlast  = lst_sr[PIPE_LAT-1];
 
