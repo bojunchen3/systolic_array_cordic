@@ -160,10 +160,10 @@ module process #(
         .result2     (result2)
     );
 
-    wire [31: 0] Output_xn;
+    wire [LANES*OUT_WIDTH-1: 0] Output_xn;
     CORDIC_Vector uut (
         .clk        (aclk),
-        .RST_N      (arestn),
+        .RST_N      (aresetn),
         .Input_x0   (result0 << 16),
         .Input_y0   (result1 << 16),
         .Input_z0   (result2 << 16),
