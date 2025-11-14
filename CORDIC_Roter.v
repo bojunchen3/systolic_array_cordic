@@ -1,26 +1,3 @@
-`timescale 1ns / 1ps
-//
-// Company: SUSTech
-// Engineer: Jack PENG
-// 
-// Create Date: 2022/09/14 17:25:45
-// Design Name: 
-// Module Name: CORDIC_Roter
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-//              Basic operation for CORDIC circular;
-//              MODE=0, rotaiton mode; MODE=1, vector mode;
-// Dependencies: 
-//              NONE
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//
- 
- 
 module CORDIC_Roter(
     clk,
     RST_N,
@@ -46,14 +23,14 @@ input wire signed [31:0] Input_x_n_1;
 input wire signed [31:0] Input_y_n_1;
 input wire signed [31:0] Input_z_n_1;
 input wire signed [31:0] Input_angle_n_1;
-input wire [31:0] Input_sign_n_1;
+input wire        [31:0] Input_sign_n_1;
 input wire signed [31:0] Input_rote_base;
  
 output reg signed [31:0] Output_x_n;
 output reg signed [31:0] Output_y_n;
 output reg signed [31:0] Output_z_n;
 output reg signed [31:0] Output_angle_n;
-output reg [31:0] Output_sign_n;
+output reg        [31:0] Output_sign_n;
 always @ (posedge clk or negedge RST_N)
     begin
         if (!RST_N) 

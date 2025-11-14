@@ -1,26 +1,3 @@
-`timescale 1ns / 1ps
-//
-// Company: SUSTech
-// Engineer: Jack PENG
-// 
-// Create Date: 2022/09/14 16:32:07
-// Design Name: 
-// Module Name: CORDIC_Vector
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-//              This program is an application of CORDIC algorithm with circlar vector mode.
-//              
-// Dependencies: CORDIC_Roter; set MODE=1;
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//
- 
- 
 module CORDIC_Vector(
     clk,
     RST_N,
@@ -83,6 +60,9 @@ always @ (posedge clk or negedge RST_N) begin
             z_00 <= 1'b0;
     end
     else begin
+            //x_00 <= (Input_x0[31])? ~Input_x0+1: Input_x0;
+            //y_00 <= (Input_y0[31])? ~Input_y0+1: Input_y0;
+            //z_00 <= (Input_z0[31])? ~Input_z0+1: Input_z0;
             x_00 <= Input_x0;
             y_00 <= Input_y0;
             z_00 <= Input_z0;

@@ -56,13 +56,45 @@ module tb;
         m_tready = 1'b1; // forever = 1
 
         // matrix data
-        for (i=0; i<12; i=i+1) mat_vals[i] = i[DATA_WIDTH-1:0];
+        mat_vals[0] = 105; 
+        mat_vals[1] = 65411;
+        mat_vals[2] = 28;
+        mat_vals[3] = 46;
+        mat_vals[4] = 65517;
+        mat_vals[5] = 23;
+        mat_vals[6] = 65462;
+        mat_vals[7] = 65421;
+        mat_vals[8] = 106;
+        mat_vals[9] = 104;
+        mat_vals[10] = 1;
+        mat_vals[11] = 65464;
+        //for (i=8; i<12; i=i+1) mat_vals[i] = i[DATA_WIDTH-1:0];
         // test vector
-	for (i=0; i<12; i=i+1) begin
-	    vec_vals[i][  DATA_WIDTH-1:            0]  = (4*i + 0);  // 低8位，自然截斷
-	    vec_vals[i][2*DATA_WIDTH-1:   DATA_WIDTH]  = (4*i + 1);
-	    vec_vals[i][3*DATA_WIDTH-1: 2*DATA_WIDTH]  = (4*i + 2);
-	    vec_vals[i][4*DATA_WIDTH-1: 3*DATA_WIDTH]  = (4*i + 3);
+        vec_vals[0][  DATA_WIDTH-1:            0] = 12; 
+        vec_vals[0][2*DATA_WIDTH-1:   DATA_WIDTH] = 65473;
+        vec_vals[0][3*DATA_WIDTH-1: 2*DATA_WIDTH] = 125;
+        vec_vals[0][4*DATA_WIDTH-1: 3*DATA_WIDTH] = 65455;
+        vec_vals[1][  DATA_WIDTH-1:            0] = 96; 
+        vec_vals[1][2*DATA_WIDTH-1:   DATA_WIDTH] = 65493;
+        vec_vals[1][3*DATA_WIDTH-1: 2*DATA_WIDTH] = 65451;
+        vec_vals[1][4*DATA_WIDTH-1: 3*DATA_WIDTH] = 65453;
+        vec_vals[2][  DATA_WIDTH-1:            0] = 22;
+        vec_vals[2][2*DATA_WIDTH-1:   DATA_WIDTH] = 65497;
+        vec_vals[2][3*DATA_WIDTH-1: 2*DATA_WIDTH] = 65516;
+        vec_vals[2][4*DATA_WIDTH-1: 3*DATA_WIDTH] = 79;
+        vec_vals[3][  DATA_WIDTH-1:            0] = 65456;
+        vec_vals[3][2*DATA_WIDTH-1:   DATA_WIDTH] = 65523;
+        vec_vals[3][3*DATA_WIDTH-1: 2*DATA_WIDTH] = 20;
+        vec_vals[3][4*DATA_WIDTH-1: 3*DATA_WIDTH] = 65478;
+        vec_vals[4][  DATA_WIDTH-1:            0] = 76; 
+        vec_vals[4][2*DATA_WIDTH-1:   DATA_WIDTH] = 65469;
+        vec_vals[4][3*DATA_WIDTH-1: 2*DATA_WIDTH] = 65535;
+        vec_vals[4][4*DATA_WIDTH-1: 3*DATA_WIDTH] = 83;
+	for (i=5; i<12; i=i+1) begin
+	    vec_vals[i][  DATA_WIDTH-1:            0]  = (4*i + 0 + 512);  // 低8位，自然截斷
+	    vec_vals[i][2*DATA_WIDTH-1:   DATA_WIDTH]  = (4*i + 1 + 512);
+	    vec_vals[i][3*DATA_WIDTH-1: 2*DATA_WIDTH]  = (4*i + 2 + 512);
+	    vec_vals[i][4*DATA_WIDTH-1: 3*DATA_WIDTH]  = (4*i + 3 + 512);
 	end
 
         // release reset

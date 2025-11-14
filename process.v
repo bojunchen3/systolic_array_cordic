@@ -160,18 +160,25 @@ module process #(
         .result2     (result2)
     );
 
+    //wire signed [31:0] cordic_x0 = {{16{result0[OUT_WIDTH-1]}}, result0} <<< 15;
+    //wire signed [31:0] cordic_y0 = {{16{result1[OUT_WIDTH-1]}}, result1} <<< 15;
+    //wire signed [31:0] cordic_z0 = {{16{result2[OUT_WIDTH-1]}}, result2} <<< 15;
+    wire [15:0] cordic_x0 = result0[15]? (~result0+1): result0;
+    wire [15:0] cordic_y0 = result1[15]? (~result1+1): result1;
+    wire [15:0] cordic_z0 = result2[15]? (~result2+1): result2;
+
     wire [LANES*OUT_WIDTH-1: 0] Output_xn;
     CORDIC_Vector uut (
         .clk        (aclk),
         .RST_N      (aresetn),
-        .Input_x0   (result0 << 16),
-        .Input_y0   (result1 << 16),
-        .Input_z0   (result2 << 16),
+        .Input_x0   (cordic_x0 <<< 15),
+        .Input_y0   (cordic_y0 <<< 15),
+        .Input_z0   (cordic_z0 <<< 15),
         .Output_xn  (Output_xn)
     );
 
     //assign m_tdata  = {result2, result1, result0};
-    assign m_tdata = Output_xn >> 16;
+    assign m_tdata = Output_xn >>> 15;
     assign m_tvalid = vld_sr[PIPE_LAT-1];
     assign m_tlast  = lst_sr[PIPE_LAT-1];
 
