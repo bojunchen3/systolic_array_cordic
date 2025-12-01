@@ -41,7 +41,7 @@ module tb;
 
     // clock
     initial aclk = 1'b0;
-    always #5 aclk = ~aclk; // 100MHz
+    always #5 aclk = ~aclk;
 
     integer i;
     reg [DATA_WIDTH-1:0] mat_vals [0:11];
