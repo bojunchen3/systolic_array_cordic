@@ -26,7 +26,7 @@ module process #(
     wire [DATA_WIDTH-1:0] lane3 = s_tdata[DATA_WIDTH*4-1:DATA_WIDTH*3];
 
     assign s_tready = 1'b1;
-    wire   s_hand        = s_tvalid & s_tready;
+    wire   s_hand   = s_tvalid & s_tready;
 
     localparam [1:0] ST_IDLE   = 2'b00;
     localparam [1:0] ST_LOAD   = 2'b01;
@@ -52,8 +52,6 @@ module process #(
                 if (s_hand) next_state = ST_LOAD;
             end
             ST_LOAD: begin
-                // 每拍固定 4 個元素，裝滿 16 個就進 STREAM
-                // 若本拍裝滿（mat_idx==12 且 s_hand），下拍轉 STREAM
                 if ((mat_idx == 4'd8) && s_hand)
                     next_state = ST_STREAM;
                 else
@@ -61,7 +59,7 @@ module process #(
             end
             ST_STREAM: begin
                 if (m_tlast)
-                    next_state = ST_IDLE; // 簡單起見，永遠停在 STREAM
+                    next_state = ST_IDLE;
             end
             default: next_state = ST_IDLE;
         endcase
@@ -160,9 +158,6 @@ module process #(
         .result2     (result2)
     );
 
-    //wire signed [31:0] cordic_x0 = {{16{result0[OUT_WIDTH-1]}}, result0} <<< 15;
-    //wire signed [31:0] cordic_y0 = {{16{result1[OUT_WIDTH-1]}}, result1} <<< 15;
-    //wire signed [31:0] cordic_z0 = {{16{result2[OUT_WIDTH-1]}}, result2} <<< 15;
     wire [15:0] cordic_x0 = result0[15]? (~result0+1): result0;
     wire [15:0] cordic_y0 = result1[15]? (~result1+1): result1;
     wire [15:0] cordic_z0 = result2[15]? (~result2+1): result2;
@@ -177,7 +172,6 @@ module process #(
         .Output_xn  (Output_xn)
     );
 
-    //assign m_tdata  = {result2, result1, result0};
     assign m_tdata = Output_xn >>> 15;
     assign m_tvalid = vld_sr[PIPE_LAT-1];
     assign m_tlast  = lst_sr[PIPE_LAT-1];
