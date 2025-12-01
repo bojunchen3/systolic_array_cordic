@@ -46,13 +46,7 @@ wire signed [31:0] y [16:1];
 wire signed [31:0] z [32:1];
 wire signed [47:0] x_temp;
 wire signed [47:0] output_temp;
- 
-// initialize the parameters for cosine and sine compute
-/*
-x_00=K; is the reciprocal of K_n
-y_00=0
-z_00=Input_x0; is the aimed angles
-*/
+
 always @ (posedge clk or negedge RST_N) begin
     if (!RST_N) begin
             x_00 <= 1'b0;
@@ -60,9 +54,6 @@ always @ (posedge clk or negedge RST_N) begin
             z_00 <= 1'b0;
     end
     else begin
-            //x_00 <= (Input_x0[31])? ~Input_x0+1: Input_x0;
-            //y_00 <= (Input_y0[31])? ~Input_y0+1: Input_y0;
-            //z_00 <= (Input_z0[31])? ~Input_z0+1: Input_z0;
             x_00 <= Input_x0;
             y_00 <= Input_y0;
             z_00 <= Input_z0;
@@ -70,7 +61,7 @@ always @ (posedge clk or negedge RST_N) begin
 end
  
 assign x_temp = x[16] * K;
-//--- generate operation pipeline --- 
+
 generate
     genvar i;
     for (i = 0; i < 32 ; i = i + 1) begin: roter    
@@ -107,3 +98,4 @@ always @ (posedge clk or negedge RST_N) begin
 end
 
 endmodule
+
